@@ -1,29 +1,65 @@
-import React,{useState} from 'react'
-import Todos from './Todos'
-import Memo from './Memo'
-import Count from './Count'
-import { useEffect } from 'react'
+import React, { useState, useMemo } from "react";
 
-let App = () =>{
-   
-    let [todos,Settodos]=useState(['New Todo'])
-    let [memo,Setmemo]=useState(['HTMLL',"CSSS3"])
-    let [count,Setcount]=useState(1000000000)
-      useEffect(()=>{
+const expensiveCalculation = (num) => {
+  console.log("Calculating...");
+  for (let i = 0; i < 1000000000; i++) {
+    num += 1;
+  }
+  return num;
+};
 
-    },[count,memo,todos])
-    return(
-        <div id='main'>
-        <h1>React.useMEMo</h1>
-        <Todos set={Settodos} arr={todos} />
-        <Count set={Setcount} number={count}/>
-        <h1>Expensive Calculation</h1>
-        {/* <div id='calc'>1000000000</div> */}
-        <Memo set={Setmemo} arr={memo} />
-        </div>
-    )
-   
-        
+function App() {
+  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState([]);
+  const [memoInput, setMemoInput] = useState("");
+
+  const calculation = useMemo(() => expensiveCalculation(count), [count]);
+
+  const increment = () => {
+    setCount((c) => c + 1);
+  };
+
+  const addTodo = () => {
+    setTodos((t) => [...t, "New Todo"]);
+  };
+
+  const addItem = () => {
+    if (memoInput.length > 5) {
+      setTodos((t) => [...t, memoInput]);
+      setMemoInput("");
+    } else {
+      alert("Please enter a text with more than 5 characters.");
+    }
+  };
+
+  return (
+    <div>
+      <div id="#main">
+        <h2>My Todos</h2>
+        {todos.map((todo, index) => {
+          return <p key={index}>{todo}</p>;
+        })}
+        <button onClick={addTodo}>Add Todo</button>
+      </div>
+      <hr />
+      <div>
+       <span id="incr-cnt">Count: {count}</span> 
+        <button id="add-todo-btn" onClick={increment}>+</button>
+        <h2>Expensive Calculation</h2>
+        {calculation}
+      </div>
+      <div>
+        <input
+        id="todo-0"
+          type="text"
+          value={memoInput}
+          onChange={(e) => setMemoInput(e.target.value)}
+          placeholder="Type here..."
+        />
+        <button  id="skill-input" onClick={addItem}>Submit</button>
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
