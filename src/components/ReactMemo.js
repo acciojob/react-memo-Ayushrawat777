@@ -14,4 +14,4 @@ const ReactMemo = ({skills}) => {
   )
 }
 
-export default ReactMemo
+export default memo(ReactMemo);
