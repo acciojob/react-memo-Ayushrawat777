@@ -1,28 +1,26 @@
-import React,{useState} from 'react'
-import Todos from './Todos'
-import Memo from './Memo'
-import Count from './Count'
-import { useEffect } from 'react'
+import React, { useState } from "react";
+import UseMemo from "./UseMemo";
+import ReactMemo from "./ReactMemo";
+const App = () => {
+    const [skill,setSkill]=useState('')
+    const [skills,setSkills]=useState(['HTML','CSS','JavaScript','React','sdadsd'])
+    const addSkills = () => {
+        if (skill.length>5) {
+            setSkills((t) => [...t, skill]);
+        } else {
+            alert("Task need to be more then 5 character")
+        }
+    };
+  return (
+    <div>
+     <UseMemo /> 
+     <h2>React.memo</h2>
+      <input type="text" onChange={(e)=>setSkill(e.target.value)}/>
+      <button onClick={addSkills}>Add Skill</button>
+      <ReactMemo skills={skills}/>
+    </div>
+  );
+};
 
-let App = () =>{
-    useEffect(()=>{
-
-    },[count,memo,todos])
-    let [todos,Settodos]=useState(['New Todo'])
-    let [memo,Setmemo]=useState(['HTMLL',"CSSS3"])
-    let [count,Setcount]=useState(1000000000)
-    return(
-        <div id='main'>
-        <h1>React.useMEMo</h1>
-        <Todos set={Settodos} arr={todos} />
-        <Count set={Setcount} number={count}/>
-        <h1>Expensive Calculation</h1>
-        {/* <div id='calc'>1000000000</div> */}
-        <Memo set={Setmemo} arr={memo} />
-        </div>
-    )
-   
-        
-}
-
-export default App
+export default App;
+ 
