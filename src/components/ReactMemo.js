@@ -1,17 +1,15 @@
-import React, { useState } from 'react'
-import { memo } from "react";
+import React, { memo } from "react";
 
-const ReactMemo = ({skills}) => {
-  console.log("child render");
+// Memoized component to prevent unnecessary re-renders
+const ReactMemo =({ todo }) => {
+  console.log("Rendering Todo List...");
   return (
-    <div>
-      <ul>
-        {skills.map((val,index)=>{
-          return <li key={index}>{val}</li>
-        })}
-      </ul>
-    </div>
-  )
+    <>
+      {todo.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+    </>
+  );
 }
 
-export default memo(ReactMemo);
+export default ReactMemo;
