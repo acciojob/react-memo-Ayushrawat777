@@ -1,15 +1,37 @@
-import React, { memo } from "react";
+import React, { useState } from 'react'
 
-// Memoized component to prevent unnecessary re-renders
-const ReactMemo =({ todo }) => {
-  console.log("Rendering Todo List...");
+const ReactMemo = () => {
+    const [input, setInput] = useState("");
+    const [list, setList] = useState([])
+    console.log(input)
+
+    const handleOnChange = (e)=> {
+        setInput(e.target.value)
+    }
+
+    const handleClick = ()=> {
+        if(input.length>5) {
+            setList([...list, input]);
+        }
+        setInput("");
+    }
+    
   return (
-    <>
-      {todo.map((item, index) => (
-        <li key={index}>{item}</li>
-      ))}
-    </>
-  );
+    <div>
+        <h1>React.memo</h1>
+        <div>
+            <span>
+            <input type='text' value={input} onChange={handleOnChange}/>
+            <button onClick={handleClick}>Add Skill</button>
+            </span>
+            <ul>
+                {list.map((item, index) => (
+                    <li key={index}>{item}</li>
+                ))}
+            </ul>
+        </div>
+    </div>
+  )
 }
 
-export default ReactMemo;
+export default  ReactMemo
