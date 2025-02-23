@@ -1,62 +1,45 @@
-import React, { useState, useMemo } from "react";
-import ReactMemo from "./ReactMemo";
-import UseMemo from "./UseMemo";
+import React, { useEffect, useState } from 'react'
+import UseMemo from './UseMemo';
+import ReactMemo from './ReactMemo';
 
 const App = () => {
-  const [todo, setTodo] = useState([]);
-  const [value, setValue] = useState("");
+    const [todo, setTodo] = useState(["New todo"]);
+    const [count, setCount] = useState(0);
 
-  const addData = (value) => {
-    if (value.length > 5) {
-      setTodo([...todo, value]);
-      setValue("");
-    } else {
-      alert("Task must be more than 5 characters!");
+    const onclickHandler = (e)=>{
+        setTodo([...todo, "New todo"]);
     }
-  };
+
+    const handleClick = () => {
+        setCount(count + 1);
+    }
 
   return (
+    <>
     <div>
-      <h3>React.useMemo</h3>
-
-      <h3>My Todos</h3>
-      <div
-        style={{
-          borderBottom: "2px solid grey", paddingBottom:"10px",
-        }}
-      >
-        <p>New Todo</p>
-        <button onClick={() => addData("New Todo")}>Add Todo</button>
-      </div>
-
-      <div
-        style={{
-          borderBottom: "2px solid grey",
-        }}
-      >
-        <UseMemo />
-      </div>
-
-      <div
-        style={{
-          marginTop:"7px",
-          borderTop: "2px solid grey",
-        }}
-      >
-        <h3>React.memo</h3>
-        <input
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
-          placeholder="Enter a task..."
-        />
-        <button onClick={() => addData(value)}>Add Task</button>
-      </div>
-
-      <ul>
-        <ReactMemo todo={todo} />
-      </ul>
+        <h1>React.useMemo</h1>
+        <h2>My todos</h2>
+        <ul>
+            {todo.map((item, index) => (
+                <li key={index}>{item}</li>
+            ))}
+        </ul>
+        <button onClick={onclickHandler} >Add Todo</button>
     </div>
-  );
-};
+    <hr />
+    <div>
+        <p>Count: {count}<span><button onClick={handleClick}>+</button></span></p>
+    </div>
 
-export default App;
+    <UseMemo count={count} />
+
+    <hr />
+    <hr />
+
+    <ReactMemo />
+
+    </>
+  )
+}
+
+export default App
